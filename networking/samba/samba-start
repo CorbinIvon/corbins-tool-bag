@@ -1,0 +1,2 @@
+sudo systemctl disable --now smbd
+sudo systemctl enable --now smbd
