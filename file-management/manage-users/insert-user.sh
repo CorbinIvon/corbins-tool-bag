@@ -1,4 +1,6 @@
 #!/bin/bash
+# Creator: Corbin Meier
+# Version: 1.3.3
 # USAGE: ./insert-user.sh [$1 USER NAME] [$2 TARGET ROOT DIR]
 
 # Create passwd
