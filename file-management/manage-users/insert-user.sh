@@ -27,15 +27,32 @@ echo "$1:x:$gid:" >> group
 sudo chmod 644 group
 sudo cp group $2/etc/group
 # /etc/sudoers
-sudo cp $2/etc/sudoers .
-sudo chmod 666 sudoers
-sudo echo "$1   ALL=(ALL:ALL) ALL" >> sudoers
-sudo chmod 440 sudoers
-sudo chown root:root sudoers
-sudo cp sudoers $2/etc/sudoers
+read -p "is Super User? [y/n]: " is_su
+if [ "$is_su" == "yes" ] || [ "$is_su" == "Yes" ] || [ "$is_su" == "YES" ] || [ "$is_su" == "y" ] || [ "$is_su" == "Y" ]; then
+  sudo cp $2/etc/sudoers .
+  sudo chmod 666 sudoers
+  sudo echo "$1   ALL=(ALL:ALL) ALL" >> sudoers
+  sudo chmod 440 sudoers
+  sudo chown root:root sudoers
+  sudo cp sudoers $2/etc/sudoers
+  echo "$1 is a Super User!"
+else
+  echo "$1 is not a Super User."
+fi
 # /home/user
 sudo cp -r skel/ $2/home/
 sudo mv $2/home/skel $2/home/$1
 sudo chown $1:$1 $2/home/$1
 # clean up
-sudo rm passwd group shadow sudoers
+if [ -f "passwd" ]; then
+  sudo rm passwd
+fi
+if [ -f "group" ]; then
+  sudo rm group
+fi
+if [ -f "shadow" ]; then
+  sudo rm shadow
+fi
+if [ -f "sudoers" ]; then
+  sudo rm sudoers
+fi
