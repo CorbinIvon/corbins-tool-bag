@@ -27,10 +27,15 @@ echo "$1:x:$gid:" >> group
 sudo chmod 644 group
 sudo cp group $2/etc/group
 # /etc/sudoers
-# UNIMPLIMENTED!
+sudo cp $2/etc/sudoers .
+sudo chmod 666 sudoers
+sudo echo "$1   ALL=(ALL:ALL) ALL" >> sudoers
+sudo chmod 440 sudoers
+sudo chown root:root sudoers
+sudo cp sudoers $2/etc/sudoers
 # /home/user
 sudo cp -r skel/ $2/home/
 sudo mv $2/home/skel $2/home/$1
 sudo chown $1:$1 $2/home/$1
 # clean up
-sudo rm passwd group shadow
+sudo rm passwd group shadow sudoers
