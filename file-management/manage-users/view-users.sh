@@ -1,2 +1,3 @@
 #!/bin/bash
-cut -d: -f1 /etc/passwd
+# USAGE: ./view-users.sh [ROOT DIR]
+cut -d: -f1 $1/etc/passwd
