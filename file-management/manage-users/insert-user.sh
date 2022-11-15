@@ -42,7 +42,7 @@ fi
 # /home/user
 sudo cp -r skel/ $2/home/
 sudo mv $2/home/skel $2/home/$1
-sudo chown $1:$1 $2/home/$1
+sudo chown $uid:$uid $2/home/$1
 # clean up
 if [ -f "passwd" ]; then
   sudo rm passwd
