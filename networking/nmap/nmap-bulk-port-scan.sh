@@ -1,5 +1,5 @@
 #!/bin/bash
-# USAGE: ./nmap-bulk.sh [FILE WITH IPS]
+# USAGE: ./nmap-bulk-port-scan.sh [FILE WITH IPs]
 ips=$(cat $1)
 for ip in $ips
 do
