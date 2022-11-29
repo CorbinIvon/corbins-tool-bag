@@ -1,0 +1,3 @@
+Using the command w3m [URL], you are given a terminal webpage which is pretty
+neat. It looks like it allows input and sending requests and selecting other
+links.
