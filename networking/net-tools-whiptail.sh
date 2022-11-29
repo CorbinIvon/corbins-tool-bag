@@ -70,7 +70,8 @@ whiptail --title "Network Tools" --menu "Make your choice" 16 100 9 \
 	"1)" "Get Global IP"   \
 	"2)" "Show Open Global Ports"  \
 	"3)" "Get Local IP" \
-	"4)" "Show Local Devices" \
+	"4)" "Show Open Local Ports" \
+	"5)" "Show Local Devices" \
 	"exit" ""  3>&2 2>&1 1>&3
 )
 
@@ -84,6 +85,7 @@ case $CHOICE in
 	"2)")
        		global_ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 		result=$(nmap $global_ip)
+		echo "$result" | less
 	;;
 
 	"3)")
@@ -92,6 +94,12 @@ case $CHOICE in
         ;;
 
 	"4)")
+		local_ip=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+		result=$(nmap $local_ip)
+		echo "$result" | less
+	;;
+
+	"5)")
 		result=$(\
 			ip -o addr show dev "eth0" | \
 			awk '$3 == "inet" {print $4}' | \
