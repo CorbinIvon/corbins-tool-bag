@@ -1,5 +1,5 @@
 # Allowed me to connect to another device
-sudo ip route add [broadcast-to-target] via [target]
+sudo ip route add [network im looking for (local domain)] via [through what means (gateway)]
 sudo ip route add [range 255].[range 255].[range 255].0/24 via [target]
 sudo ip route add [container destination] via [server-ip]
 sudo ip route add 10.122.0.0/24 via 192.168.1.128
