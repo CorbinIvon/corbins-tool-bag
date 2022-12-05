@@ -1,4 +1,5 @@
 # Allowed me to connect to another device
+sudo ip route add [network im looking for (local domain)] via [through what means (gateway) (whichever is already connected to internet)]
 sudo ip route add [network im looking for (local domain)] via [through what means (gateway)]
 sudo ip route add [range 255].[range 255].[range 255].0/24 via [target]
 sudo ip route add [container destination] via [server-ip]
