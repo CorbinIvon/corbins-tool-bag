@@ -44,5 +44,6 @@ def Get_Desired_Position(Pinitial, Pfinal, desired_distance):
 	Pdesired = Vector3(str(Pnormal.x * float(desired_distance) + Pinitial.x) + "," + str(Pnormal.y * float(desired_distance) + Pinitial.y) + "," + str(Pnormal.z * float(desired_distance) + Pinitial.z))
 	return Pdesired # Vector3 the desired point n units away from P0 in the direction of Pd
 
-main()
-input("Press [ENTER] to continue")
+while True:
+	main()
+	input("Press [ENTER] to continue")
