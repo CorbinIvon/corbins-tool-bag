@@ -104,8 +104,7 @@ case $CHOICE in
 			awk '$3 == "inet" {print $4}' | \
 			nmap -sn `xargs` | \
 			grep -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
-			sed 's/Nmap scan report for //g' | \
-			sed 's/\.hsd1\.ca\.comcast\.net//g' \
+			sed 's/Nmap scan report for //g' \
 		)
 		#echo "$result" > local-network-devices.txt
 		echo "$result" | less
@@ -118,3 +117,5 @@ esac
 whiptail --msgbox "$result" $(tput lines) $(tput cols)
 done
 exit
+#			sed 's/\.hsd1\.ca\.comcast\.net//g' \
+
