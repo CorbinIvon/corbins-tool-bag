@@ -13,22 +13,24 @@ def main():
 	return
 
 class Vector3:
-	x = 2
-	y = 2
-	z = 2
+	x = 0
+	y = 0
+	z = 0
 	def __init__(self, parse_string):
 		# Explode by [,] and / or [ ], get the 3 numbers. Assign x y and z
+		list_of_chars = [' ','<','>','!','?','[',']','{','}','(',')','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+		translation_table = str.maketrans('', '', ''.join(list_of_chars))
+		parse_string = parse_string.translate(translation_table)
 		coords = parse_string.split(",")
 		if len(coords) != 3:
 			print ("Coordinate not 3 points. Exiting...")
+			print (coords)
 			exit(1)
 		self.x = float(coords[0])
 		self.y = float(coords[1])
 		self.z = float(coords[2])
 		return
 
-def Get_Normal_1_Magnitude(Pd):
-	return # Vector3 the point 1 unit away from P0
 def Get_Desired_Position(Pinitial, Pfinal, desired_distance):
 	# Direction Vector = P1 - P0 = Pd
 	Pdelta = Vector3(str(Pfinal.x-Pinitial.x) + "," + str(Pfinal.y-Pinitial.y) + "," + str(Pfinal.z-Pinitial.z))
