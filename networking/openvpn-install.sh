@@ -81,6 +81,7 @@ fi
 
 new_client () {
 	# Generates the custom client.ovpn
+	mkdir -p ~/ovpn
 	{
 	cat /etc/openvpn/server/client-common.txt
 	echo "<ca>"
@@ -95,7 +96,7 @@ new_client () {
 	echo "<tls-crypt>"
 	sed -ne '/BEGIN OpenVPN Static key/,$ p' /etc/openvpn/server/tc.key
 	echo "</tls-crypt>"
-	} > ~/"$client".ovpn
+	} > ~/ovpn/"$client".ovpn
 }
 
 if [[ ! -e /etc/openvpn/server/server.conf ]]; then
@@ -500,6 +501,7 @@ else
 				cp /etc/openvpn/server/easy-rsa/pki/crl.pem /etc/openvpn/server/crl.pem
 				# CRL is read with each client connection, when OpenVPN is dropped to nobody
 				chown nobody:"$group_name" /etc/openvpn/server/crl.pem
+				rm ~/ovpn/"$client".ovpn
 				echo
 				echo "$client revoked!"
 			else
