@@ -1,0 +1,80 @@
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name prefix.site.url;
+
+	rewrite ^ https://$host$request_uri? permanent;
+
+	location / {
+		return 301 https://$host$request_uri;
+	}
+}
+
+server {
+	#listen 443 ssl http2;
+	#listen [::]:443 ssl http2;
+
+	server_name prefix.site.url;
+
+	# Logging
+	access_log /var/log/nginx/site.access;
+	error_log /var/log/nginx/site.error error;
+
+	# Max client body size
+	client_max_body_size 256M;
+
+	# SSL configuration
+	#
+	#ssl_certificate     /etc/letsencrypt/live/prefix.site.url/fullchain.pem;
+	#ssl_certificate_key /etc/letsencrypt/live/prefix.site.url/privkey.pem;
+
+	#ssl_session_timeout 1d;
+	#ssl_session_cache shared:MozSSL:10m;	# about 40000 sessions
+	#ssl_session_tickets off;
+
+	# Modern Configuration
+	#ssl_protocols       TLSv1.3;
+	#ssl_prefer_server_ciphers off;
+
+	# HSTS ((ngx_http_headers_module is required) (63072000 seconds)
+	#add_header Strict-Transport-Security "max-age=63072000" always;
+
+	# OCSP stapling
+	#ssl_stapling on;
+	#ssl_stapling_verify on;
+
+	# verify chain of trust of OCSP response using Root CA and Intermediate certs
+	#ssl_trusted_certificate /etc/letsencrypt/live/prefix.site.url/chain.pem;
+
+	# Resolver
+	#resolver 10.10.10.1;
+
+	root /var/www/site;
+
+	# Add index.php to the list if you are using PHP
+	index index.php index.html index.htm index.nginx-debian.html;
+
+	location ~ /\.git {
+		deny all;
+	}
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+
+	# pass PHP scripts to FastCGI server
+	#
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+	#
+	#	# With php-fpm (or other unix sockets):
+		# Make sure to include the correct phpX.X-fpm.sock module.
+		# Latest version was php8.1-fpm.sock
+		fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+	#	# With php-cgi (or other tcp sockets):
+	#	fastcgi_pass 127.0.0.1:9000;
+	}
+}
