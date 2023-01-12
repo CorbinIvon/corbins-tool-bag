@@ -16,6 +16,7 @@
 ##              restore. I will probably create this feature in the future, but do
 ##              not have a need to do so right now.
 ##
+
 TIMESTAMP=$(date +%s)
 mysql_lists=$(mysql --execute="SHOW DATABASES" | grep -v "| " | sed '1d')
 backup_dir=$(pwd)/backups
