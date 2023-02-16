@@ -1,0 +1,11 @@
+# Load this script in the .bashrc
+sh_hosts=$(grep -E '^Host\s' ~/.ssh/config | awk '{print $2}')
+
+_sshfs_fast_complete()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "${_ssh_hosts}" -- $cur) )
+    return 0
+}
+
+complete -F _sshfs_fast_complete sshfs-fast
