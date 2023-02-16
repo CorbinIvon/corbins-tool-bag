@@ -1,5 +1,5 @@
 # Load this script in the .bashrc
-sh_hosts=$(grep -E '^Host\s' ~/.ssh/config | awk '{print $2}')
+_ssh_hosts=$(grep -Ei '^host\s' ~/.ssh/config | awk '{print $2}')
 
 _sshfs_fast_complete()
 {
