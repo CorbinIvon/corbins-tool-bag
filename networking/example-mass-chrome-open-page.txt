@@ -1,0 +1,1 @@
+nmap -sn 10.10.10.0/24 | ./ips/get-ips-from-input.sh ; cat ips-out.raw | ./chromium-mass-open.sh
