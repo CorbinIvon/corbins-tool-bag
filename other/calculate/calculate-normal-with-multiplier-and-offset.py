@@ -1,15 +1,20 @@
+#!/usr/bin/python3
+# Used for SE
 import math
 def main():
-	P0 = Vector3(input("Initial Point: "))
-	P1 = Vector3(input("Second  Point: "))
+	P0raw = input("Initial Point: ").split(":")
+	P1raw = input("Second  Point: ").split(":")
+	P0 = Vector3(str(P0raw[2])+","+P0raw[3]+","+P0raw[4])
+	P1 = Vector3(str(P1raw[2])+","+P1raw[3]+","+P1raw[4])
 	desired_distance = input ("Desired Point Distance? ")
 
 	Pdesired = Get_Desired_Position(P0, P1, desired_distance)
-	print (
-		"X: "+str(Pdesired.x) + "\n"
-		"Y: "+str(Pdesired.y) + "\n"
-		"Z: "+str(Pdesired.z)
-		)
+#	print (
+#		"X: "+str(Pdesired.x) + "\n"
+#		"Y: "+str(Pdesired.y) + "\n"
+#		"Z: "+str(Pdesired.z)
+#		)
+	print (P0raw[0]+":"+P0raw[1]+":"+str(Pdesired.x)+":"+str(Pdesired.y)+":"+str(Pdesired.z)+":"+P0raw[5]+":")
 	return
 
 class Vector3:
@@ -22,10 +27,7 @@ class Vector3:
 		translation_table = str.maketrans('', '', ''.join(list_of_chars))
 		parse_string = parse_string.translate(translation_table)
 		coords = parse_string.split(",")
-		if len(coords) != 3:
-			print ("Coordinate not 3 points. Exiting...")
-			print (coords)
-			exit(1)
+
 		self.x = float(coords[0])
 		self.y = float(coords[1])
 		self.z = float(coords[2])
