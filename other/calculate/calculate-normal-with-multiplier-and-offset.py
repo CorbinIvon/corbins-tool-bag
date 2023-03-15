@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Used for SE
+# Used for the Space Engineers game.
 import math
 def main():
 	P0raw = input("Initial Point: ").split(":")
