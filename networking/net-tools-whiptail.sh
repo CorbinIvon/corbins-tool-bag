@@ -67,55 +67,55 @@ while [ 1 ]
 do
 CHOICE=$(
 whiptail --title "Network Tools" --menu "Make your choice" 16 100 9 \
-	"1)" "Get Global IP"   \
-	"2)" "Show Open Global Ports"  \
-	"3)" "Get Local IP" \
-	"4)" "Show Open Local Ports" \
-	"5)" "Show Local Devices" \
+	"Show Global IPv4" "" \
+	"Show Global Network Open Ports" "" \
+	"Show Local IPv4" "" \
+	"Show Local Open Ports" "" \
+	"Show Devices On Same Network" "" \
 	"exit" ""  3>&2 2>&1 1>&3
 )
 
 
 result="result placeholder"
 case $CHOICE in
-	"1)")
-		#result="I am $result, the name of the script is start"
+	"Show Global IPv4")
 		result="My global IP is:\n"$(dig +short myip.opendns.com @resolver1.opendns.com)
 	;;
-	"2)")
+
+	"Show Global Network Open Ports")
        		global_ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 		result=$(nmap $global_ip)
 		echo "$result" | less
 	;;
 
-	"3)")
-		#result=$(ifconfig eth0 | grep 'inet ' | cut -d: -f2 | awk '{print $2}')
+	"Show Local IPv4")
 		result=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
         ;;
 
-	"4)")
+	"Show Local Open Ports")
 		local_ip=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 		result=$(nmap $local_ip)
 		echo "$result" | less
 	;;
 
-	"5)")
+	"Show Devices On Same Network")
 		result=$(\
 			ip -o addr show dev "eth0" | \
 			awk '$3 == "inet" {print $4}' | \
 			nmap -sn `xargs` | \
 			grep -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | \
-			sed 's/Nmap scan report for //g' | \
-			sed 's/\.hsd1\.ca\.comcast\.net//g' \
+			sed 's/Nmap scan report for //g' \
 		)
 		#echo "$result" > local-network-devices.txt
 		echo "$result" | less
-		result="Continue."
         ;;
 
 	"exit") exit
         ;;
 esac
-whiptail --msgbox "$result" 20 78
+#whiptail --msgbox "$result" 20 78
+whiptail --msgbox "$result" $(tput lines) $(tput cols)
 done
 exit
+#			sed 's/\.hsd1\.ca\.comcast\.net//g' \
+

@@ -1,0 +1,3 @@
+#!/bin/bash
+# ./show-redirects.sh http......
+curl -L -w '%{url_effective}\n' -o /dev/null -s $1
